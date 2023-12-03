@@ -12,7 +12,7 @@ static inline size_t js_malloc_usable_size_unknown(const void *ptr)
 }
 
 /* default memory allocation functions with memory limitation */
-static inline size_t js_def_malloc_usable_size(void *ptr)
+static inline size_t js_def_malloc_usable_size(const void *ptr)
 {
 #if defined(__APPLE__)
     return malloc_size(ptr);

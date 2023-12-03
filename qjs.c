@@ -233,18 +233,7 @@ static const JSMallocFunctions trace_mf = {
     js_trace_malloc,
     js_trace_free,
     js_trace_realloc,
-#if defined(__APPLE__)
-    malloc_size,
-#elif defined(_WIN32)
-    (size_t (*)(const void *))_msize,
-#elif defined(EMSCRIPTEN)
-    NULL,
-#elif defined(__linux__) || defined(__CYGWIN__)
-    (size_t (*)(const void *))malloc_usable_size,
-#else
-    /* change this to `NULL,` if compilation fails */
-    malloc_usable_size,
-#endif
+    js_def_malloc_usable_size,
 };
 
 #define PROG_NAME "qjs"
