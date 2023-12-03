@@ -412,5 +412,5 @@ jobs:
           shell: bash
           run: |
             sudo ${{ matrix.os.pkginstall }}
-            make stats
-            make test
+            make stats JOBS=4
+            make test JOBS=4

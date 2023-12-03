@@ -26,7 +26,7 @@
 
 BUILD_DIR=build
 BUILD_TYPE?=Release
-JOBS?=$(shell JOBS=`getconf _NPROCESSORS_ONLN`; [ -z $$JOBS ] && echo 1 || echo $$JOBS)
+JOBS?=$(shell getconf _NPROCESSORS_ONLN)
 
 QJS=$(BUILD_DIR)/qjs
 RUN262=$(BUILD_DIR)/run-test262
@@ -35,6 +35,7 @@ RUN262=$(BUILD_DIR)/run-test262
 all: build
 
 build: $(BUILD_DIR)/CMakeCache.txt
+	echo JOBS=$(JOBS)
 	cmake --build $(BUILD_DIR) -j $(JOBS)
 
 $(BUILD_DIR)/CMakeCache.txt:
