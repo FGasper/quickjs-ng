@@ -26,11 +26,7 @@
 
 BUILD_DIR=build
 BUILD_TYPE?=Release
-JOBS?=$(shell getconf _NPROCESSORS_ONLN)
-
-ifeq ($(JOBS),)
-JOBS=1
-endif
+JOBS?=$(shell JOBS=`getconf _NPROCESSORS_ONLN`; [ -z $$JOBS ] && echo 1 || echo $$JOBS)
 
 QJS=$(BUILD_DIR)/qjs
 RUN262=$(BUILD_DIR)/run-test262
