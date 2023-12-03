@@ -394,10 +394,10 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - name: FreeBSD 13
+          - name: freebsd
             version: '13.2'
             pkginstall: pkg install -y cmake-core
-          - name: OpenBSD 7
+          - name: openbsd
             version: '7.4'
             pkginstall: pkg_add cmake
 
