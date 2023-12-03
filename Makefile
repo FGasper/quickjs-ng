@@ -27,6 +27,7 @@
 BUILD_DIR=build
 BUILD_TYPE?=Release
 JOBS?=$(shell getconf _NPROCESSORS_ONLN)
+JOBS?=1
 
 QJS=$(BUILD_DIR)/qjs
 RUN262=$(BUILD_DIR)/run-test262
