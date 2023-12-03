@@ -34,11 +34,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <time.h>
-#if defined(__APPLE__)
-#include <malloc/malloc.h>
-#elif defined(__linux__) || defined(__CYGWIN__)
-#include <malloc.h>
-#endif
+
+#include "quickjs-malloc.h"
 
 #include "cutils.h"
 #include "quickjs-libc.h"
