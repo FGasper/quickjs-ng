@@ -71,7 +71,10 @@ typedef sig_t sighandler_t;
 #include <crt_externs.h>
 #define environ (*_NSGetEnviron())
 #endif
-#endif /* __APPLE__ */
+#elif defined(__FreeBSD__)
+typedef sig_t sighandler_t;
+extern char **environ;
+#endif
 
 #endif
 
@@ -3584,6 +3587,8 @@ void js_std_set_worker_new_context_func(JSContext *(*func)(JSRuntime *rt))
 #define OS_PLATFORM "js"
 #elif defined(__CYGWIN__)
 #define OS_PLATFORM "cygwin"
+#elif defined(__FreeBSD__)
+#define OS_PLATFORM "freebsd"
 #else
 #define OS_PLATFORM "linux"
 #endif
