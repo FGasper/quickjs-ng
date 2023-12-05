@@ -35,6 +35,7 @@ RUN262=$(BUILD_DIR)/run-test262
 all: build
 
 build: $(BUILD_DIR)/CMakeCache.txt
+	cc felipe_round.c && ./a.out
 	cmake --build $(BUILD_DIR) -j $(JOBS)
 
 $(BUILD_DIR)/CMakeCache.txt:
