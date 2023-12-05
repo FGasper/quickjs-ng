@@ -10945,23 +10945,10 @@ static void js_ecvt1(double d, int n_digits, int *decpt, int *sign, char *buf,
 {
     if (rounding_mode != FE_TONEAREST) {
         fesetround(rounding_mode);
-
-        // It's not a given that snprintf will use the configured rounding.
-        if (n_digits == 1) {
-            //fprintf(stderr, "----- NOT replacing %f with %f\n", d, rint(d));
-            d = rint(d);
-            fesetround(rounding_mode);
-        }
     }
 
     snprintf(buf1, buf1_size, "%+.*e", n_digits - 1, d);
-/*
-    if (rounding_mode != FE_TONEAREST) {
-        if (n_digits == 1) {
-            fprintf(stderr, "----- buf=[%s]\n", buf1);
-        }
-    }
-*/
+
     if (rounding_mode != FE_TONEAREST)
         fesetround(FE_TONEAREST);
     *sign = (buf1[0] == '-');
