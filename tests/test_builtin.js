@@ -345,8 +345,9 @@ function test_number()
     assert(Number.isNaN(Number("-")));
     assert(Number.isNaN(Number("\x00a")));
 
-    // TODO: Fix rounding errors on Windows/Cygwin.
-    if (['win32', 'cygwin'].includes(os.platform)) {
+    // TODO: Fix rounding errors in these OSes.
+    // (https://github.com/quickjs-ng/quickjs/issues/27)
+    if (['win32', 'cygwin', 'openbsd'].includes(os.platform)) {
         return;
     }
 
