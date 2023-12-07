@@ -36,7 +36,7 @@ all: build
 
 build: $(BUILD_DIR)/CMakeCache.txt
 	#cc -o felipe_round felipe_round.c && ./felipe_round
-	cmake --build $(BUILD_DIR) -j $(JOBS)
+	cmake --build $(BUILD_DIR) -j8
 
 $(BUILD_DIR)/CMakeCache.txt:
 	cmake -B $(BUILD_DIR) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
