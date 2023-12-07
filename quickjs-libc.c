@@ -67,18 +67,19 @@
 
 #if defined(__APPLE__)
 typedef sig_t sighandler_t;
-#if !defined(environ)
 #include <crt_externs.h>
 #define environ (*_NSGetEnviron())
 #endif
-#endif /* __APPLE__ */
 
+#if defined(__OpenBSD__) || defined(__FreeBSD__)
+typedef sig_t sighandler_t;
+extern char **environ;
 #endif
 
-#if !defined(_WIN32)
 /* enable the os.Worker API. IT relies on POSIX threads */
 #define USE_WORKER
-#endif
+
+#endif /* _WIN32 */
 
 #ifdef USE_WORKER
 #include <pthread.h>
@@ -3584,8 +3585,14 @@ void js_std_set_worker_new_context_func(JSContext *(*func)(JSRuntime *rt))
 #define OS_PLATFORM "js"
 #elif defined(__CYGWIN__)
 #define OS_PLATFORM "cygwin"
-#else
+#elif defined(__linux__)
 #define OS_PLATFORM "linux"
+#elif defined(__OpenBSD__)
+#define OS_PLATFORM "openbsd"
+#elif defined(__FreeBSD__)
+#define OS_PLATFORM "freebsd"
+#else
+#define OS_PLATFORM "unknown"
 #endif
 
 #define OS_FLAG(x) JS_PROP_INT32_DEF(#x, x, JS_PROP_CONFIGURABLE )
