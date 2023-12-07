@@ -418,3 +418,19 @@ jobs:
             cmake --build build -j $(sysctl -n hw.ncpu)
             ./build/qjs -qd
             make test
+
+  netbsd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: build + test
+        uses: vmactions/netbsd-vm@v1.0.3
+        with:
+          usesh: true
+          prepare: |
+            pkgin install cmake
+          run: |
+            cmake -B build
+            cmake --build build -j $(sysctl -n hw.ncpu)
+            ./build/qjs -qd
+            make test
