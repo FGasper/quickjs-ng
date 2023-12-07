@@ -401,6 +401,7 @@ jobs:
             cmake -B build
             cmake --build build -j $(sysctl -n hw.ncpu)
             ./build/qjs -qd
+            make test
 
   freebsd:
     runs-on: ubuntu-latest
@@ -416,3 +417,4 @@ jobs:
             cmake -B build
             cmake --build build -j $(sysctl -n hw.ncpu)
             ./build/qjs -qd
+            make test
