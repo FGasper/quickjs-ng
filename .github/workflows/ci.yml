@@ -398,7 +398,7 @@ jobs:
           prepare: |
             pkg_add cmake
           run: |
-            cc felipe_round.c
+            cc felipe_round.c -lm
             ./a.out
             cmake -B build --build build -j4;
             ./build/qjs -qd;
@@ -432,7 +432,7 @@ jobs:
           prepare: |
             /usr/sbin/pkg_add cmake
           run: |
-            cc felipe_round.c
+            cc felipe_round.c -lm
             ./a.out
             cmake -B build --build build -j4;
             ./build/qjs -qd;
