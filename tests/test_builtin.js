@@ -365,7 +365,6 @@ function test_number()
 
     const testFloats = () => {
         assert((25).toExponential(0), "3e+1");
-        assert((-25).toExponential(0), "-3e+1");
     };
 
     // TODO: Fix rounding errors in these OSes.
@@ -376,6 +375,7 @@ function test_number()
         testFloats();
     }
 
+    assert((-25).toExponential(0), "-3e+1");
     assert((2.5).toPrecision(1), "3");
     assert((-2.5).toPrecision(1), "-3");
     assert((1.125).toFixed(2), "1.13");
