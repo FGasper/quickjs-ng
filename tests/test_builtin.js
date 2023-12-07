@@ -8,9 +8,9 @@ class AssertionFailed extends Error {
     }
 }
 
-function assert_todo(callback) {
+function assert_todo(actual, expected, message) {
     try {
-        callback();
+        assert(actual, expected, message);
         std.err.puts(`TODO passed: ${callback.toString()}\n`);
     } catch (e) {
         if (e instanceof AssertionFailed) {
@@ -375,14 +375,12 @@ function test_number()
         assertFunc = assert;
     }
 
-    [
-        () => assert((25).toExponential(0), "3e+1"),
-        () => assert((-25).toExponential(0), "-3e+1"),
-        () => assert((2.5).toPrecision(1), "3"),
-        () => assert((-2.5).toPrecision(1), "-3"),
-        () => assert((1.125).toFixed(2), "1.13"),
-        () => assert((-1.125).toFixed(2), "-1.13"),
-    ].forEach(cb => assert_todo(cb));
+    assertFunc((25).toExponential(0), "3e+1");
+    assertFunc((-25).toExponential(0), "-3e+1");
+    assertFunc((2.5).toPrecision(1), "3");
+    assertFunc((-2.5).toPrecision(1), "-3");
+    assertFunc((1.125).toFixed(2), "1.13");
+    assertFunc((-1.125).toFixed(2), "-1.13");
 }
 
 function test_eval2()
