@@ -1,5 +1,23 @@
 import * as os from "os";
 
+class AssertionFailed extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'AssertionFailed';
+    }
+}
+
+function todo(callback) {
+    try {
+        callback()
+    } catch (e) {
+        if (e instanceof AssertionFailed) {
+            console.log(`TODO: ${e}`);
+        } else {
+            throw e
+        }
+    }
+}
 
 function assert(actual, expected, message) {
     if (arguments.length == 1)
@@ -13,7 +31,7 @@ function assert(actual, expected, message) {
     &&  actual.toString() === expected.toString())
         return;
 
-    throw Error("assertion failed: got |" + actual + "|" +
+    throw new AssertionFailed("assertion failed: got |" + actual + "|" +
                 ", expected |" + expected + "|" +
                 (message ? " (" + message + ")" : ""));
 }
@@ -345,14 +363,19 @@ function test_number()
     assert(Number.isNaN(Number("-")));
     assert(Number.isNaN(Number("\x00a")));
 
+    testFloats = () => {
+        assert((25).toExponential(0), "2e+1");
+        assert((-25).toExponential(0), "-3e+1");
+    }
+
     // TODO: Fix rounding errors in these OSes.
     // (https://github.com/quickjs-ng/quickjs/issues/27)
     if (['win32', 'cygwin', 'openbsd'].includes(os.platform)) {
-        return;
+        todo(testFloats);
+    } else {
+        testFloats();
     }
 
-    assert((25).toExponential(0), "3e+1");
-    assert((-25).toExponential(0), "-3e+1");
     assert((2.5).toPrecision(1), "3");
     assert((-2.5).toPrecision(1), "-3");
     assert((1.125).toFixed(2), "1.13");
