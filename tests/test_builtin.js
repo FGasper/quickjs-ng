@@ -1,4 +1,5 @@
 import * as os from "os";
+import * as std from "std";
 
 class AssertionFailed extends Error {
     constructor(message) {
@@ -7,12 +8,13 @@ class AssertionFailed extends Error {
     }
 }
 
-function todo(callback) {
+function assert_todo(callback) {
     try {
-        callback()
+        callback();
+        std.err.puts(`TODO passed: ${callback.toString()}\n`);
     } catch (e) {
         if (e instanceof AssertionFailed) {
-            console.log(`TODO: ${e}`);
+            std.out.puts(`TODO (${e}: ${callback.toString()}\n`);
         } else {
             throw e
         }
@@ -363,23 +365,24 @@ function test_number()
     assert(Number.isNaN(Number("-")));
     assert(Number.isNaN(Number("\x00a")));
 
-    const testFloats = () => {
-        assert((25).toExponential(0), "3e+1");
-    };
+    let assertFunc
 
     // TODO: Fix rounding errors in these OSes.
     // (https://github.com/quickjs-ng/quickjs/issues/27)
     if (['win32', 'cygwin', 'openbsd'].includes(os.platform)) {
-        todo(testFloats);
+        assertFunc = assert_todo;
     } else {
-        testFloats();
+        assertFunc = assert;
     }
 
-    assert((-25).toExponential(0), "-3e+1");
-    assert((2.5).toPrecision(1), "3");
-    assert((-2.5).toPrecision(1), "-3");
-    assert((1.125).toFixed(2), "1.13");
-    assert((-1.125).toFixed(2), "-1.13");
+    [
+        () => assert((25).toExponential(0), "3e+1"),
+        () => assert((-25).toExponential(0), "-3e+1"),
+        () => assert((2.5).toPrecision(1), "3"),
+        () => assert((-2.5).toPrecision(1), "-3"),
+        () => assert((1.125).toFixed(2), "1.13"),
+        () => assert((-1.125).toFixed(2), "-1.13"),
+    ].forEach(cb => assert_todo(cb));
 }
 
 function test_eval2()
