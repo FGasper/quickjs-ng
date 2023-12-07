@@ -363,10 +363,10 @@ function test_number()
     assert(Number.isNaN(Number("-")));
     assert(Number.isNaN(Number("\x00a")));
 
-    testFloats = () => {
-        assert((25).toExponential(0), "2e+1");
+    const testFloats = () => {
+        assert((25).toExponential(0), "3e+1");
         assert((-25).toExponential(0), "-3e+1");
-    }
+    };
 
     // TODO: Fix rounding errors in these OSes.
     // (https://github.com/quickjs-ng/quickjs/issues/27)
