@@ -10921,6 +10921,24 @@ static void js_ecvt1(double d, int n_digits, int *decpt, int *sign, char *buf,
 
     snprintf(buf1, buf1_size, "%+.*e", n_digits - 1, d);
 
+    char *roundmodestr;
+    switch (rounding_mode) {
+        case FE_TONEAREST:
+            roundmodestr = "to nearest";
+            break;
+        case FE_DOWNWARD:
+            roundmodestr = "downward";
+            break;
+        case FE_UPWARD:
+            roundmodestr = "upward";
+            break;
+        default:
+            assert(0 /* bad round mode? */);
+            roundmodestr = ""; // satisfy compiler
+    }
+
+    printf("%f rounded %s with %d digit(s) = %s\n", d, roundmodestr, n_digits-1, buf1);
+
     if (rounding_mode != FE_TONEAREST)
         fesetround(FE_TONEAREST);
     *sign = (buf1[0] == '-');
@@ -10985,10 +11003,8 @@ static int js_ecvt(double d, int n_digits, int *decpt, int *sign, char *buf,
                 if (memcmp(buf1, buf2, n_digits + 1) == 0 && decpt1 == decpt2) {
                     /* exact result: round away from zero */
                     if (sign1) {
-                        printf("rounding down: %f\n", d);
                         rounding_mode = FE_DOWNWARD;
                     } else {
-                        printf("rounding up: %f\n", d);
                         rounding_mode = FE_UPWARD;
                     }
                 }
