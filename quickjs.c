@@ -10984,10 +10984,13 @@ static int js_ecvt(double d, int n_digits, int *decpt, int *sign, char *buf,
                          buf_tmp, sizeof(buf_tmp));
                 if (memcmp(buf1, buf2, n_digits + 1) == 0 && decpt1 == decpt2) {
                     /* exact result: round away from zero */
-                    if (sign1)
+                    if (sign1) {
+                        printf("rounding down: %f\n", d);
                         rounding_mode = FE_DOWNWARD;
-                    else
+                    } else {
+                        printf("rounding up: %f\n", d);
                         rounding_mode = FE_UPWARD;
+                    }
                 }
             }
         }
