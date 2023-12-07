@@ -398,7 +398,7 @@ jobs:
           prepare: |
             pkg_add cmake
           run: |
-            cmake --build build -j $(sysctl -n hw.ncpu)
+            cmake --build build -j4
             ./build/qjs -qd
             make test
 
@@ -413,7 +413,7 @@ jobs:
           prepare: |
             pkg install -y cmake
           run: |
-            cmake --build build -j $(sysctl -n hw.ncpu)
+            cmake --build build -j4
             ./build/qjs -qd
             make test
 
@@ -428,6 +428,6 @@ jobs:
           prepare: |
             /usr/sbin/pkg_add cmake
           run: |
-            cmake --build build -j $(sysctl -n hw.ncpu)
+            cmake --build build -j4
             ./build/qjs -qd
             make test
